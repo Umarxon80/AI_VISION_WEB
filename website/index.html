@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrafficWatch AI — WIUT Hackathon 2026</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div style="display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:18px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8623A" stroke-width="1.8"><rect x="3" y="7" width="14" height="10" rx="2"/><path d="M17 10l4-2v8l-4-2"/></svg>
+      TrafficWatch<span style="color:var(--accent)">AI</span>
+    </div>
+    <div class="links">
+      <a href="#approach">Approach</a>
+      <a href="#eda">EDA</a>
+      <a href="#results">Results</a>
+      <a href="#demo">Live demo</a>
+      <a href="#report">Report</a>
+      <a href="#links">Links</a>
+    </div>
+  </div>
+</nav>
+
+<!-- TEAM / HERO -->
+<section id="team">
+  <div class="wrap">
+    <span class="pill">WIUT HACKATHON 2026 · CV TRACK</span>
+    <h1 style="font-size:42px;margin-top:16px;max-width:780px">Rule-based traffic event detection on a fixed road camera.</h1>
+    <p class="dim" style="max-width:640px;font-size:16px">YOLO11m detection + tracking, combined with hand-drawn zone geometry and signal-state logic, turns raw footage into a timestamped list of the 14 official event types. Part A only — see the Report section for why.</p>
+    <div class="grid cols-3" style="margin-top:36px">
+      <div class="card">
+        <h3 style="font-size:17px">Umarxon Sultonov</h3>
+        <div class="dim" style="font-size:13.5px;margin-bottom:10px">Team lead</div>
+        <div style="display:flex;gap:12px;font-size:13px">
+          <a href="#" class="dim">GitHub</a><a href="#" class="dim">LinkedIn</a><a href="#" class="dim">Portfolio</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:17px">Nurmuhammad Baxromov</h3>
+        <div class="dim" style="font-size:13.5px;margin-bottom:10px">Presenter</div>
+        <div style="display:flex;gap:12px;font-size:13px">
+          <a href="#" class="dim">GitHub</a><a href="#" class="dim">LinkedIn</a><a href="#" class="dim">Portfolio</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:17px">Otabek Ibragimov</h3>
+        <div class="dim" style="font-size:13.5px;margin-bottom:10px">AI specialist — built solution.py</div>
+        <div style="display:flex;gap:12px;font-size:13px">
+          <a href="#" class="dim">GitHub</a><a href="#" class="dim">LinkedIn</a><a href="#" class="dim">Portfolio</a>
+        </div>
+      </div>
+    </div>
+    <!-- TODO: fill in each member's real GitHub / LinkedIn / portfolio links above -->
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="wrap">
+    <h2 style="font-size:28px">Problem & approach</h2>
+    <p class="dim">No trained accident classifier — a detector + tracker feeds hand-written, camera-specific rules.</p>
+    <div class="card" style="margin:24px 0;overflow-x:auto">
+      <svg viewBox="0 0 980 140" style="width:100%;min-width:760px">
+        <style>.b{fill:#1B2129;stroke:#262C35}.t{font-family:'IBM Plex Sans',sans-serif;font-size:13px;fill:#F2EFE9}.s{font-family:'IBM Plex Sans',sans-serif;font-size:11px;fill:#9099A6}.a{stroke:#E8623A;stroke-width:2;marker-end:url(#arrow)}</style>
+        <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#E8623A"/></marker></defs>
+        <rect class="b" x="10" y="40" width="150" height="60" rx="10"/><text class="t" x="85" y="66" text-anchor="middle">.mp4 input</text><text class="s" x="85" y="82" text-anchor="middle">fixed camera</text>
+        <line class="a" x1="160" y1="70" x2="200" y2="70"/>
+        <rect class="b" x="200" y="40" width="170" height="60" rx="10"/><text class="t" x="285" y="66" text-anchor="middle">Frame sampling</text><text class="s" x="285" y="82" text-anchor="middle">every 5th frame</text>
+        <line class="a" x1="370" y1="70" x2="410" y2="70"/>
+        <rect class="b" x="410" y="40" width="170" height="60" rx="10"/><text class="t" x="495" y="60" text-anchor="middle">YOLO11m</text><text class="s" x="495" y="76" text-anchor="middle">detect + track</text><text class="s" x="495" y="90" text-anchor="middle">person, car, bus, truck</text>
+        <line class="a" x1="580" y1="70" x2="620" y2="70"/>
+        <rect class="b" x="620" y="40" width="190" height="60" rx="10"/><text class="t" x="715" y="60" text-anchor="middle">Zone + signal rules</text><text class="s" x="715" y="76" text-anchor="middle">polygons, trajectories,</text><text class="s" x="715" y="90" text-anchor="middle">HSV light-color read</text>
+        <line class="a" x1="810" y1="70" x2="850" y2="70"/>
+        <rect class="b" x="850" y="40" width="120" height="60" rx="10"/><text class="t" x="910" y="66" text-anchor="middle">Event list</text><text class="s" x="910" y="82" text-anchor="middle">[start,end,label]</text>
+      </svg>
+    </div>
+    <div class="grid cols-3">
+      <div class="card">
+        <h3 style="font-size:16px">What's learned</h3>
+        <p class="dim" style="font-size:14px;margin:0">Only object detection and tracking — Ultralytics YOLO11m, COCO-pretrained, open weights. No training was run for this task.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:16px">What's rule-based (Part A)</h3>
+        <p class="dim" style="font-size:14px;margin:0">Every event definition: hand-drawn zone polygons for this camera's exact framing, trajectory thresholds, box-overlap ratios, and an HSV pixel-crop read of the traffic signal.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:16px">Part B — risk estimator</h3>
+        <p class="dim" style="font-size:14px;margin:0">Physics-based, not learned: per-frame accident risk from Time-To-Collision and Closest-Point-of-Approach between tracked object pairs, over a tightened 2-second horizon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDA -->
+<section id="eda">
+  <div class="wrap">
+    <h2 style="font-size:28px">EDA on the sample videos</h2>
+    <p class="dim">[Replace this section with your notebook's real exports — counts, plots, and findings below are placeholders.]</p>
+    <div class="grid cols-4" style="margin:24px 0">
+      <div class="card"><div class="dim" style="font-size:12.5px">Resolution</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[e.g. 3840×2160]</div></div>
+      <div class="card"><div class="dim" style="font-size:12.5px">Frame rate</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[e.g. 25 fps]</div></div>
+      <div class="card"><div class="dim" style="font-size:12.5px">Avg. clip length</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[e.g. 6–10 min]</div></div>
+      <div class="card"><div class="dim" style="font-size:12.5px">Sample videos</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[N]</div></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="card"><div class="placeholder" style="height:200px;display:flex;align-items:center;justify-content:center">Object-count-over-time chart<br>(export from your notebook)</div></div>
+      <div class="card"><div class="placeholder" style="height:200px;display:flex;align-items:center;justify-content:center">Motion heatmap / vehicle trajectories<br>(export from your notebook)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="wrap">
+    <h2 style="font-size:28px">Results on the sample videos</h2>
+    <p class="dim">Annotated playback, event timeline, and honest failure cases for every sample clip.</p>
+    <div class="grid cols-2" style="margin-top:24px">
+      <!-- Repeat one card per sample video -->
+      <div class="card">
+        <div class="placeholder" style="height:180px;display:flex;align-items:center;justify-content:center">[Annotated video / GIF — sample_01.mp4]</div>
+        <div style="margin-top:12px">
+          <span class="timeline-chip"><span class="dot" style="background:var(--warn)"></span>red_light 0:32</span>
+          <span class="timeline-chip"><span class="dot" style="background:var(--dim)"></span>congestion 1:10–1:40</span>
+          <span class="timeline-chip"><span class="dot" style="background:var(--accent)"></span>near_miss 2:05</span>
+        </div>
+        <div class="placeholder" style="height:70px;margin-top:10px;display:flex;align-items:center;justify-content:center">[Part B risk curve for this clip]</div>
+      </div>
+      <div class="card">
+        <div class="placeholder" style="height:180px;display:flex;align-items:center;justify-content:center">[Annotated video / GIF — sample_02.mp4]</div>
+        <div style="margin-top:12px">
+          <span class="timeline-chip"><span class="dot" style="background:var(--warn)"></span>stop_line 0:48–1:12</span>
+        </div>
+        <div class="placeholder" style="height:70px;margin-top:10px;display:flex;align-items:center;justify-content:center">[Part B risk curve for this clip]</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3 style="font-size:16px">Honest failure cases</h3>
+      <p class="dim" style="font-size:14px;margin:0">[e.g. occlusion at the far junction corner loses tracks and under-counts stop_line events; wrong_way zone triggers on legal U-turns from the bus lane — see Report.]</p>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO -->
+<section id="demo">
+  <div class="wrap">
+    <h2 style="font-size:28px">Live demo</h2>
+    <p class="dim">Upload an .mp4 (≤2 minutes recommended) — CPU inference, so expect it to take a minute or two.</p>
+    <div class="card" style="margin-top:20px;padding:0;overflow:hidden">
+      <!-- Update this src once your Hugging Face Space is deployed -->
+      <iframe
+        src="https://YOUR-HF-USERNAME-trafficwatch-ai.hf.space"
+        style="width:100%;height:560px;border:none;display:block;background:var(--surface2)"
+        title="TrafficWatch AI live demo">
+      </iframe>
+      <div style="padding:14px 18px;border-top:1px solid var(--border);font-size:12.5px" class="dim">
+        Demo not loading? <a href="https://YOUR-HF-USERNAME-trafficwatch-ai.hf.space" class="btn ghost" style="padding:4px 10px;font-size:12px">Open it directly →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT -->
+<section id="report">
+  <div class="wrap">
+    <h2 style="font-size:28px">Report</h2>
+    <div class="grid cols-3">
+      <div class="card"><h3 style="font-size:16px">What worked</h3><p class="dim" style="font-size:14px;margin:0">A stateful stop-line stopwatch that tracks how long a vehicle sits on the line during red, momentum and jitter filters that separate real red-light entries and collisions from tracker wiggle, and a geometric + temporal filter that keeps shadows and debris from firing false jaywalking events.</p></div>
+      <div class="card"><h3 style="font-size:16px">What did not (at first)</h3><p class="dim" style="font-size:14px;margin:0">Naive 2D vector-crossing for risk estimation badly over-triggered, since a camera's perspective makes parallel lanes look like they converge. A 5-second TTC horizon also saturated the risk graph near 1.0 for nearly the whole video. Fixed with proper CPA math, a lane-width separation filter, and tightening the horizon to 2 seconds. illegal_turn, solid_line_crossing, road_obstacle and fire_smoke are not implemented yet.</p></div>
+      <div class="card"><h3 style="font-size:16px">Next steps</h3><p class="dim" style="font-size:14px;margin:0">Add the missing classes, replace the fixed zone polygons with a homography so the pipeline survives a resolution/crop change, and keep tuning how often Part B re-runs detection per frame against the shared time budget.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LINKS -->
+<section id="links">
+  <div class="wrap">
+    <h2 style="font-size:28px">Links</h2>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:16px">
+      <a class="btn" href="https://github.com/Umarxon80/AI_VISION">Repository →</a>
+      <a class="btn ghost" href="https://github.com/Umarxon80/AI_VISION/tree/main/weights">Weights →</a>
+      <a class="btn ghost" href="https://github.com/Umarxon80/AI_VISION/blob/main/predictions_samples.json">predictions_samples.json →</a>
+    </div>
+  </div>
+</section>
+
+<footer>Built for WIUT Hackathon 2026 — Computer Vision Track · AI Vision</footer>
+
+</body>
+</html>
