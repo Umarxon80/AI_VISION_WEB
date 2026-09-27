@@ -99,16 +99,19 @@
 <section id="eda">
   <div class="wrap">
     <h2 style="font-size:28px">EDA on the sample videos</h2>
-    <p class="dim">[Replace this section with your notebook's real exports — counts, plots, and findings below are placeholders.]</p>
     <div class="grid cols-4" style="margin:24px 0">
       <div class="card"><div class="dim" style="font-size:12.5px">Resolution</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[e.g. 3840×2160]</div></div>
       <div class="card"><div class="dim" style="font-size:12.5px">Frame rate</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[e.g. 25 fps]</div></div>
       <div class="card"><div class="dim" style="font-size:12.5px">Avg. clip length</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[e.g. 6–10 min]</div></div>
-      <div class="card"><div class="dim" style="font-size:12.5px">Sample videos</div><div style="font-family:var(--display);font-size:22px;font-weight:700">[N]</div></div>
+      <div class="card"><div class="dim" style="font-size:12.5px">Sample videos</div><div style="font-family:var(--display);font-size:22px;font-weight:700">4</div></div>
     </div>
     <div class="grid cols-2">
-      <div class="card"><div class="placeholder" style="height:200px;display:flex;align-items:center;justify-content:center">Object-count-over-time chart<br>(export from your notebook)</div></div>
-      <div class="card"><div class="placeholder" style="height:200px;display:flex;align-items:center;justify-content:center">Motion heatmap / vehicle trajectories<br>(export from your notebook)</div></div>
+      <div class="card">
+        <div class="placeholder" style="height:300px;display:flex;align-items:center;justify-content:center"><img src="./img/1st_frame.png" alt="" style="height: 300px; border-radius: 10px;"></div>
+        <p>We took the first frame of the video to define some areas and intersections based on that</p>
+    </div>
+      <div class="card"><div class="placeholder" style="height:300px;display:flex;align-items:center;justify-content:center"><img src="./img/YOLO.png" alt="" style="height: 300px; border-radius: 10px;"></div>
+        <p>We used YOLO's vison to recognise people and cars (built-in classes)</p>
     </div>
   </div>
 </section>
@@ -117,29 +120,16 @@
 <section id="results">
   <div class="wrap">
     <h2 style="font-size:28px">Results on the sample videos</h2>
-    <p class="dim">Annotated playback, event timeline, and honest failure cases for every sample clip.</p>
     <div class="grid cols-2" style="margin-top:24px">
       <!-- Repeat one card per sample video -->
       <div class="card">
-        <div class="placeholder" style="height:180px;display:flex;align-items:center;justify-content:center">[Annotated video / GIF — sample_01.mp4]</div>
-        <div style="margin-top:12px">
-          <span class="timeline-chip"><span class="dot" style="background:var(--warn)"></span>red_light 0:32</span>
-          <span class="timeline-chip"><span class="dot" style="background:var(--dim)"></span>congestion 1:10–1:40</span>
-          <span class="timeline-chip"><span class="dot" style="background:var(--accent)"></span>near_miss 2:05</span>
-        </div>
-        <div class="placeholder" style="height:70px;margin-top:10px;display:flex;align-items:center;justify-content:center">[Part B risk curve for this clip]</div>
+        <div class="placeholder" style="display:flex;align-items:center;justify-content:center"><img src="./img/test1.png" alt="" style="height:180px;border-radius: 10px;"></div>
+        <p style="align-self: center;">We tested our model on the 1st minute of video 1</p>
       </div>
       <div class="card">
-        <div class="placeholder" style="height:180px;display:flex;align-items:center;justify-content:center">[Annotated video / GIF — sample_02.mp4]</div>
-        <div style="margin-top:12px">
-          <span class="timeline-chip"><span class="dot" style="background:var(--warn)"></span>stop_line 0:48–1:12</span>
-        </div>
-        <div class="placeholder" style="height:70px;margin-top:10px;display:flex;align-items:center;justify-content:center">[Part B risk curve for this clip]</div>
+        <div class="placeholder" style="display:flex;align-items:center;justify-content:center"><img src="./img/test2.png" alt="" style="height:180px;border-radius: 10px;"></div>
+        <p style="align-self: center;">Tasted results of 2nd minute of same video as well</p>
       </div>
-    </div>
-    <div class="card" style="margin-top:20px">
-      <h3 style="font-size:16px">Honest failure cases</h3>
-      <p class="dim" style="font-size:14px;margin:0">[e.g. occlusion at the far junction corner loses tracks and under-counts stop_line events; wrong_way zone triggers on legal U-turns from the bus lane — see Report.]</p>
     </div>
   </div>
 </section>
